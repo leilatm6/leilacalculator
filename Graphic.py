@@ -6,6 +6,7 @@ class Graphic():
         self.number = 0
         self.number1 = 0
         self.float = 0
+        self.equalres = False
         self.root = Tk()
         self.root.title("Leila Calculator")
         self.e = Entry(self.root, width=50)
@@ -61,6 +62,9 @@ class Graphic():
         self.root.mainloop()
 
     def click(self, num):
+        if self.equalres:
+            self.number = 0
+            self.entry("clear")
         if self.float:
             self.number = self.number + num / (10 ** self.float)
             self.number = round(self.number,self.float)
@@ -75,7 +79,6 @@ class Graphic():
         elif operation == ".":
             self.float = 1
         elif operation == "clear":
-            self.number = 0
             self.entry('clear')
         elif operation == "**":
             self.operand = '**'
@@ -104,7 +107,6 @@ class Graphic():
             self.operand = '/'
             self.entry('clear')
 
-
         self.entrynum(self.number)
 
     def equal(self):
@@ -123,6 +125,7 @@ class Graphic():
         self.operand = '='
         self.entry("clear")
         self.entrynum(self.number)
+        self.equalres = True
 
     def entrynum(self, num):
         self.e.delete(0, END)
@@ -135,12 +138,12 @@ class Graphic():
 
 
 
-
     def entry(self, operand):
         s = self.e.get()
         if operand == "clear":
             s = ""
             self.float = 0
+            self.equalres = False
         elif operand == "neg":
             if not s:
                 return
